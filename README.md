@@ -1,4 +1,4 @@
-# Counter_to_be_replace
+# Kanban
 
 Description for component.
 
@@ -7,7 +7,7 @@ Description for component.
 ## Import
 
 ```js
-import '@omiu/counter_to_be_replace'
+import '@omiu/o-kanban'
 ```
 
 Or use script tag to ref it.
@@ -19,7 +19,7 @@ Or use script tag to ref it.
 ## Usage
 
 ```html
-<o-counter_to_be_replace></o-counter_to_be_replace>
+<o-kanban></o-kanban>
 ```
 
 ## API
@@ -28,8 +28,14 @@ Or use script tag to ref it.
 
 ```tsx
 {
-  count?: number
-  onCountChanged?: (evt: CustomEvent) => void
+  dataSource: T[];
+  title?:string;
+  renderItem?:renderItemType;
+  onEnd:(data:T[])=>void;
+
+  isLimited?:boolean;//是否固定高度，改为滚动 未实装
+  height?:string;
+  width?:string;
 }
 ```
 
@@ -37,10 +43,10 @@ Or use script tag to ref it.
 
 ```tsx
 {
-  count: 1
+  
 }
 ```
 
 ### Events
 
-- count-changed
+- onEnd

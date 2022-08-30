@@ -1,6 +1,6 @@
-# Counter_to_be_replace 计数器
+# Kanban 看板
 
-计数器描述，待替换。
+
 
 <iframe height="351" style="width: 100%;" scrolling="no" title="OMIU Counter_to_be_replace" src="https://codepen.io/omijs/embed/?height=351&theme-id=default&default-tab=html,result" frameborder="no" allowtransparency="true" allowfullscreen="true" loading="lazy">
   See the Pen <a href='https://codepen.io/omijs/pen/'>OMIU Checkbox</a> by OMI
@@ -10,7 +10,7 @@
 ## 导入
 
 ```js
-import '@omiu/counter_to_be_replace'
+import '@omiu/o-kanban'
 ```
 
 或者直接 script 标签引入。
@@ -22,7 +22,7 @@ import '@omiu/counter_to_be_replace'
 ## 使用
 
 ```html
-<o-counter_to_be_replace></o-counter_to_be_replace>
+<o-kanban></o-kanban>
 ```
 
 ## API
@@ -31,8 +31,14 @@ import '@omiu/counter_to_be_replace'
 
 ```tsx
 {
-  count?: number
-  onCountChanged?: (evt: CustomEvent) => void
+  dataSource: T[];
+  title?:string;
+  renderItem?:renderItemType;
+  onEnd:(data:T[])=>void;
+
+  isLimited?:boolean;//是否固定高度，改为滚动 未实装
+  height?:string;
+  width?:string;
 }
 ```
 
@@ -40,10 +46,10 @@ import '@omiu/counter_to_be_replace'
 
 ```tsx
 {
-  count: 1
+  
 }
 ```
 
 ### Events
 
-- count-changed
+- onEnd
