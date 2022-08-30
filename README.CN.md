@@ -41,6 +41,19 @@ import '@omiu/o-kanban'
   width?:string;
 }
 ```
+### dataSource
+
+```tsx
+CardType{
+  id?:number;
+  title?:string;
+}
+DataType{
+  id?:number;
+  title?:string;
+  cards:CardType[];
+}
+```
 
 ### 默认属性
 

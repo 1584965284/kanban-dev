@@ -39,6 +39,20 @@ Or use script tag to ref it.
 }
 ```
 
+### dataSource
+
+```tsx
+CardType{
+  id?:number;
+  title?:string;
+}
+DataType{
+  id?:number;
+  title?:string;
+  cards:CardType[];
+}
+```
+
 ### Default Props
 
 ```tsx
