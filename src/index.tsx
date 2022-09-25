@@ -107,7 +107,6 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
   }
 
   render(props:KanbanColumnProps<DataType>) {
-
     return (
       <h.f>
         <div>
