@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@omiu/button": "latest",
-    "@omiu/card": "latest",
+    "@omiu/card": "^0.0.9",
     "@omiu/common": "latest",
     "@omiu/dialog": "latest",
     "@omiu/icon": "^0.0.4",
