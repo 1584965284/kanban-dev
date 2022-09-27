@@ -32,12 +32,12 @@
     "types"
   ],
   "dependencies": {
-    "@omiu/button": "^0.0.11",
-    "@omiu/card": "^0.0.8",
+    "@omiu/button": "latest",
+    "@omiu/card": "latest",
     "@omiu/common": "latest",
-    "@omiu/dialog": "^0.0.4",
+    "@omiu/dialog": "latest",
     "@omiu/icon": "^0.0.4",
-    "@omiu/input": "^0.0.12",
+    "@omiu/input": "latest",
     "omi": "latest",
     "sortablejs": "^1.15.0"
   },
