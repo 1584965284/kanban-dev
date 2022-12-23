@@ -3,7 +3,10 @@
 Description for component.
 
 - [→ CodePen](https://codepen.io/omijs/pen/)
-
+## Install
+```shell
+npm install @omiu/kanban
+```
 ## Import
 
 ```js
@@ -13,7 +16,7 @@ import '@omiu/o-kanban'
 Or use script tag to ref it.
 
 ```html
-<script src="https://unpkg.com/@omiu/counter_to_be_replace"></script>
+<script src="https://unpkg.com/@omiu/kanban"></script>
 ```
 
 ## Usage
@@ -52,6 +55,12 @@ DataType{
   cards:CardType[];
 }
 dataSource:DataType[];
+
+export type renderItemType=
+  (card?: CardType|undefined,
+   cardIndex?: number,
+   columnIndex?:number) => VNode;
+
 ```
 
 ### Default Props

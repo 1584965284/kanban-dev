@@ -1,12 +1,14 @@
 # Kanban 看板
 
-
-
 <iframe height="351" style="width: 100%;" scrolling="no" title="OMIU Counter_to_be_replace" src="https://codepen.io/omijs/embed/?height=351&theme-id=default&default-tab=html,result" frameborder="no" allowtransparency="true" allowfullscreen="true" loading="lazy">
   See the Pen <a href='https://codepen.io/omijs/pen/'>OMIU Checkbox</a> by OMI
   (<a href='https://codepen.io/omijs'>@omijs</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
+## Install
+```shell
+npm install @omiu/kanban
+```
 ## 导入
 
 ```js

@@ -37,7 +37,7 @@
     "@omiu/common": "latest",
     "@omiu/dialog": "latest",
     "@omiu/icon": "^0.0.4",
-    "@omiu/input": "latest",
+    "@omiu/input": "^0.0.14",
     "omi": "latest",
     "sortablejs": "^1.15.0"
   },

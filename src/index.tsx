@@ -14,7 +14,8 @@ export interface DataType{
   title?:string;
   cards:CardType[];
 }
-export type renderItemType=(card?: CardType|undefined, cardIndex?: number,columnIndex?:number) => VNode;
+export type renderItemType=
+  (card?: CardType|undefined, cardIndex?: number,columnIndex?:number) => VNode;
 
 export interface KanbanProps<T>{
   dataSource: T[];
