@@ -10,7 +10,7 @@ npm install @omiu/kanban
 ## Import
 
 ```js
-import '@omiu/o-kanban'
+import '@omiu/kanban'
 ```
 
 Or use script tag to ref it.
