@@ -19,7 +19,6 @@ export type renderItemType=
 
 export interface KanbanProps<T>{
   dataSource: T[];
-  title?:string;
   renderItem?:renderItemType;
   onEnd:(data:T[])=>void;
 
@@ -31,17 +30,17 @@ export interface KanbanColumnProps <T>{
   dataSource:T[];
   group?:string;
   myGroup?:string;
-  title?:string;
+  valueTitle?:string;
   cards?:CardType[];
   index:number;
   onEnd:(data:T[])=>void;
+  onOmiDataChanged:(data:T[])=>void;
   renderItem?:renderItemType;
 }
 
 export interface KanbanCardProps <T>{
   dataSource:T[];
   sort?:string;
-  title?:string;
   item?:CardType;
   index:number;
   columnIndex?:number;
@@ -49,8 +48,23 @@ export interface KanbanCardProps <T>{
   renderItem?:renderItemType;
 }
 const tagName = 'o-kanban'
-
+declare global{
+  namespace JSX{
+    interface HTMLElementTagNameMap {
+      'o-kanban': Kanban
+    }
+  }
+}
 define('o-kanban-card',class KanbanCard extends WeElement{
+  static propTypes={
+    dataSource:Array,
+    sort:String,
+    item:Object,
+    index:Number,
+    columnIndex:Number,
+    onEnd:Function,
+    renderItem:Function
+  }
   render(props:KanbanCardProps<DataType>) {
     if(props.renderItem){
       return (
@@ -70,6 +84,18 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
   isVisible = false;
   isInput = false; newTitle: string = '';
   isCreate = false; newCardTitle = '';
+  static propTypes={
+    className:String,
+    cards:Array,
+    index:Number,
+    onEnd:Function,
+    onOmiDataChanged:Function,
+    dataSource:Array,
+    group:String,
+    myGroup:String,
+    valueTitle:String,
+    renderItem:Function
+  }
   installed() {
     if(this.taskContainer&&this.taskContainer.current instanceof HTMLElement){
       Sortable.create(this.taskContainer.current,{
@@ -92,12 +118,13 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
                 } else {
                   this.props.dataSource[toInt].cards.splice(newDraggableIndex, 0, this.props.dataSource[fromInt].cards.splice(oldDraggableIndex, 1)[0])
                 }
-
+                this.props.onOmiDataChanged(this.props.dataSource);
                 this.props.onEnd(this.props.dataSource);
               }
             } else {
               this.props.dataSource[toInt].cards.splice(newDraggableIndex, 0, this.props.dataSource[fromInt].cards[oldDraggableIndex])
               this.props.dataSource[fromInt].cards.splice(oldDraggableIndex, 1);
+              this.props.onOmiDataChanged(this.props.dataSource);
               this.props.onEnd(this.props.dataSource);
             }
           }else console.log(to);
@@ -117,6 +144,7 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
             <o-button size="small" onClick={()=>{this.isVisible=false;this.update()}} style={{marginRight:"0.6rem"}}>取 消</o-button>
             <o-button size="small" type="primary" onClick={()=>{
               props.dataSource.splice(props.index,1);
+              props.onOmiDataChanged(this.props.dataSource);
               props.onEnd(props.dataSource);
               this.isVisible=false;this.update();
             }}>确 定</o-button>
@@ -135,6 +163,7 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
                   }} style={{width: "9.6rem"}}></o-input>
                   <div className="o-kanban-column-input-svg" onClick={() => {
                     props.dataSource[props.index].title = this.newTitle;
+                    props.onOmiDataChanged(this.props.dataSource);
                     props.onEnd(props.dataSource);
                     this.isInput = false;
                     this.update();
@@ -156,7 +185,7 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
                   whiteSpace:"nowrap",
                   maxWidth:"10.5rem",
                   height:"2rem"
-                  }}>{props.title || "title"}</h3>
+                  }}>{props.valueTitle || "title"}</h3>
                 <span style={{
                   fontSize: "0.5rem",
 
@@ -195,7 +224,7 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
                   props.cards.map((value,index)=>{
                     return(
                       <div>
-                        <o-kanban-card sort={props.index+","+index} title={props.title} item={value} index={index} columnIndex={props.index} renderItem={props.renderItem} dataSource={props.dataSource} onEnd={props.onEnd}/>
+                        <o-kanban-card sort={props.index+","+index}  item={value} index={index} columnIndex={props.index} renderItem={props.renderItem} dataSource={props.dataSource} onEnd={props.onEnd}/>
                       </div>
                     )
                   })
@@ -215,6 +244,7 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
                     <div className="o-kanban-column-input-svg" onClick={() => {
                       if(this.kanbanColumnContainer.current instanceof HTMLElement &&this.addDivContainer.current instanceof HTMLElement){
                         props.dataSource[props.index].cards.push({title:this.newCardTitle});
+                        this.props.onOmiDataChanged(this.props.dataSource);
                         props.onEnd(props.dataSource);
                         this.kanbanColumnContainer.current.removeChild(this.addDivContainer.current);
                         this.isCreate = false;
@@ -267,8 +297,35 @@ export default class Kanban extends WeElement<KanbanProps<DataType>> {
   myGroup:string=String(Math.floor(Math.random()*10000000));
   Container=createRef();
   newColumn='';
+  omiData:DataType[]=[];
+  onOmiDataChanged=(data:DataType[]):void=>{
+    this.omiData=data;
+    this.update();
+  }
+  static defaultProps={
+    dataSource:[{
+      title: 'TODO 1',
+      cards:[
+        {
+          title: 'TODO 1',
+        },
+        {
+          title: 'TODO 1',
+        }
+      ]
+    }],
+    onEnd:()=>{},
+    renderItem:()=>{}
+  }
+  static propTypes = {
+    dataSource:Array,
+    onEnd:Function,
+    renderItem:Function
+  }
 
   installed() {
+    this.omiData=this.props.dataSource;
+    this.update();
     if(this.Container){
       Sortable.create(this.Container.current as HTMLElement,{
         group:this.myGroup,
@@ -286,7 +343,7 @@ export default class Kanban extends WeElement<KanbanProps<DataType>> {
               }else{
                 this.props.dataSource.splice(newDraggableIndex,0,this.props.dataSource.splice(oldDraggableIndex,1)[0])
               }
-
+              this.onOmiDataChanged(this.props.dataSource);
               this.props.onEnd(this.props.dataSource);
             }
           }
@@ -302,9 +359,9 @@ export default class Kanban extends WeElement<KanbanProps<DataType>> {
       <h.f>
         <div className="o-kanban" ref={this.Container}>
           {props.dataSource?.map((value, index) =>
-            <o-kanban-column className="draggable" onEnd={props.onEnd} cards={value.cards} index={index}
-                             group={this.group}
-                             myGroup={this.myGroup} title={value.title} dataSource={props.dataSource}
+            <o-kanban-column className="draggable" onEnd={props.onEnd} onOmiDataChanged={this.onOmiDataChanged} cards={value.cards} index={index}
+                             group={this.group} key={value.id?value.id:index}
+                             myGroup={this.myGroup} valueTitle={value.title} dataSource={props.dataSource}
                              renderItem={props.renderItem}></o-kanban-column>
           )}
           {/* + */}
