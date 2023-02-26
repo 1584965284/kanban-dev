@@ -57,12 +57,11 @@ export default class MyDemo extends WeElement<Props> {
   columnIndex : number|undefined = 0;
   cardIndex: number|undefined = 0;
   cardTitle: string|undefined='';
-  /*onChanged = (data:DataType[]) => {
+  onChanged = (data:DataType[]) => {
     //同步内部状态到外部
     this.dataSource = data; //Vue和React等框架可以在onChange回调函数中将dataSource同步到state或者data之中
     this.update();
-  }*/
-  onChanged=()=>{}
+  }
 
   renderItem:renderItemType=(card,cardIndex,columnIndex)=>(
     <div>
