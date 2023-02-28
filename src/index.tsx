@@ -84,6 +84,16 @@ define('o-kanban-column',class KanbanColumn extends WeElement<KanbanColumnProps<
   isVisible = false;
   isInput = false; newTitle: string = '';
   isCreate = false; newCardTitle = '';
+  static defaultProps={
+    cards:[
+      {
+        title: 'TODO 4',
+      },
+      {
+        title: 'TODO 4',
+      }
+    ]
+  }
   static propTypes={
     className:String,
     cards:Array,
@@ -311,6 +321,16 @@ export default class Kanban extends WeElement<KanbanProps<DataType>> {
         },
         {
           title: 'TODO 1',
+        }
+      ]
+    },{
+      title: 'TODO 2',
+      cards:[
+        {
+          title: 'TODO 2',
+        },
+        {
+          title: 'TODO 2.1',
         }
       ]
     }],

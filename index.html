@@ -4,19 +4,62 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OMIU</title>
+    <title>OMIU Kanban</title>
     <script type="module" src="/src/index.tsx"></script>
   </head>
 
   <body>
     <h1>HTML Mode <a href="./demo.html">JSX Mode</a></h1>
-    <o-kanban ></o-kanban>
+
     <script>
       /*document
         .querySelector('o-counter')
         .addEventListener('count-changed', function (evt) {
           console.log(evt.detail)
         })*/
+      const kanban = document.createElement('o-kanban');
+      kanban.setAttribute('dataSource',`[
+    {
+      title: 'TODO 1',
+      cards:[
+        {
+          title: 'TODO 1.1',
+        },
+        {
+          title: 'TODO 1.2',
+        }
+      ]
+    },
+    {
+        title: 'TODO 2',
+       cards:[]
+    },
+    {
+        title: 'TODO 3',
+      cards:[
+        {
+          title: 'TODO 3',
+        },
+        {
+          title: 'TODO 3',
+        }
+      ]
+
+    },
+    {
+        title: 'TODO 4',
+      cards:[
+        {
+          title: 'TODO 4.1',
+        },
+        {
+          title: 'TODO 4.1',
+        }
+      ]
+    },
+]`)
+      document.body.append(kanban)
+
     </script>
   </body>
 </html>
